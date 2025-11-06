@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Asset folder: /assets for all images and sounds */
+
+:root{
+  --glass: rgba(255,255,255,0.7);
+  --glass-dark: rgba(30,58,138,0.7);
+  --accent: #3b82f6;
+  --accent-600: #2563eb;
+  --muted: #64748b;
+}
+
+html, body, #__next {
+  height: 100%;
+  width: 100%;
+  /* overflow: hidden; */ /* REMOVE THIS LINE */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+html,body,#__next { height:100%; }
+body {
+  background: linear-gradient(135deg, #e0f7fa 0%, #b3c6ff 40%, #e0ecff 80%, #fff 100%);
+  color: #0f172a;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(224,247,250,0.7));
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.7);
+  box-shadow: 0 6px 30px rgba(30,64,175,0.10);
+  border-radius: 1rem;
+}
+
+.oceanic-glass {
+  background: linear-gradient(135deg, rgba(30,64,175,0.12) 0%, rgba(224,247,250,0.85) 100%);
+  backdrop-filter: blur(14px) saturate(120%);
+  border: 1px solid rgba(30,64,175,0.10);
+  box-shadow: 0 8px 32px 0 rgba(30,64,175,0.10);
+  border-radius: 1.25rem;
+}
+
+.oceanic-gradient {
+  background: linear-gradient(135deg, #2563eb 0%, #38bdf8 60%, #fff 100%);
+}
+
+.scale-hover:hover { transform: translateY(-6px) scale(1.02); }
+.scale-press:active { transform: translateY(0) scale(0.98); }
+
+.container-max { max-width: 1200px; margin-left: auto; margin-right: auto; padding-left: 1rem; padding-right: 1rem; }
+
+.fade-in { animation: fadeIn 600ms ease both; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform:none;} }
