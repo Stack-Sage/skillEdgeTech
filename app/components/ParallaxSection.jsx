@@ -1,24 +1,49 @@
 'use client'
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
+
+const sections = [];
+let ticking = false;
+
+function updateAll() {
+  for (const { ref, speed } of sections) {
+    if (!ref.current) continue;
+    const isMobile = window.innerWidth < 768;
+    const effectiveSpeed = isMobile ? 0 : speed;
+    const rect = ref.current.getBoundingClientRect();
+    const scrollY = window.scrollY || window.pageYOffset;
+    const sectionTop = rect.top + scrollY;
+    const windowHeight = window.innerHeight;
+    const sectionCenter = sectionTop + rect.height / 2;
+    const distance = (scrollY + windowHeight / 2) - sectionCenter;
+    const offset = distance * effectiveSpeed;
+    ref.current.style.transform = `translateY(${offset}px)`;
+  }
+  ticking = false;
+}
+
+function onScrollOrResize() {
+  if (!ticking) {
+    window.requestAnimationFrame(updateAll);
+    ticking = true;
+  }
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("scroll", onScrollOrResize, { passive: true });
+  window.addEventListener("resize", onScrollOrResize, { passive: true });
+}
 
 export default function ParallaxSection({ speed = 0.15, children, className = "", style = {}, ...props }) {
   const ref = useRef();
-  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    function onScroll() {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const scrollY = window.scrollY || window.pageYOffset;
-      const sectionTop = rect.top + scrollY;
-      const windowHeight = window.innerHeight;
-      const sectionCenter = sectionTop + rect.height / 2;
-      const distance = (scrollY + windowHeight / 2) - sectionCenter;
-      setOffset(distance * speed);
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const entry = { ref, speed };
+    sections.push(entry);
+    updateAll();
+    return () => {
+      const idx = sections.indexOf(entry);
+      if (idx !== -1) sections.splice(idx, 1);
+    };
   }, [speed]);
 
   return (
@@ -28,8 +53,7 @@ export default function ParallaxSection({ speed = 0.15, children, className = ""
       style={{
         ...style,
         willChange: "transform",
-        transform: `translateY(${offset}px)`,
-        transition: "transform 0.1s cubic-bezier(.4,0,.2,1)",
+        transition: "transform 0.08s cubic-bezier(.4,0,.2,1)",
       }}
       {...props}
     >

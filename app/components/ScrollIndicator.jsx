@@ -18,6 +18,10 @@ export default function ScrollIndicator() {
         className="h-1 bg-blue-500 transition-all"
         style={{ width: `${scroll * 100}%` }}
         aria-hidden="true"
+        role="progressbar"
+        aria-valuenow={Math.round(scroll * 100)}
+        aria-valuemin={0}
+        aria-valuemax={100}
       />
     </div>
   );

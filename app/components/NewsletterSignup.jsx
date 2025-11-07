@@ -17,6 +17,7 @@ export default function NewsletterSignup() {
         {!submitted ? (
           <form
             className="flex flex-col sm:flex-row gap-3 w-full max-w-md"
+            aria-label="Newsletter signup form"
             onSubmit={e => {
               e.preventDefault();
               setSubmitted(true);
@@ -27,6 +28,7 @@ export default function NewsletterSignup() {
               required
               placeholder="Your email"
               className="flex-1 px-4 py-2 rounded-full border border-blue-200"
+              aria-label="Your email address"
             />
             <motion.button
               type="submit"
@@ -35,7 +37,7 @@ export default function NewsletterSignup() {
                 scale: 1.08,
                 background: "linear-gradient(90deg, #38bdf8 0%, #2563eb 100%)",
                 boxShadow: "0 0 16px #38bdf8aa",
-                transition: { duration: 0.18 }
+                transition: { duration: 0.13 }
               }}
               whileTap={{ scale: 0.97 }}
             >

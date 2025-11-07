@@ -39,9 +39,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* --- SEO: For top-notch SEO, set unique <title> and <meta name="description"> in each page/route if you add more pages. --- */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="description" content={metadata.description} />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:title" content={metadata.title} />
+        <meta property="og:description" content={metadata.description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={siteContent.companyName.replace(/SkillEdge/gi, "Bluvia")} />
+        <meta property="og:url" content={metadata.openGraph.url} />
+        <meta property="og:image" content={metadata.openGraph.images[0].url} />
+        <meta property="og:image:alt" content={metadata.openGraph.images[0].alt} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={metadata.title} />
+        <meta name="twitter:description" content={metadata.description} />
+        <meta name="twitter:image" content={metadata.openGraph.images[0].url} />
+        <meta name="twitter:image:alt" content={metadata.openGraph.images[0].alt} />
         <link rel="canonical" href={metadata.openGraph.url} />
         <title>{metadata.title}</title>
         <link rel="icon" href="/assets/logo_square.png" type="image/png" />

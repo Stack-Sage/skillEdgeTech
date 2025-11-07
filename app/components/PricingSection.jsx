@@ -19,7 +19,7 @@ export default function PricingSection() {
         <div className="container-max">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 md:mb-10"
             style={{ color: "#0f172a" }}>
-            Pricing
+            Website Pricing & Packages
           </h2>
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {siteContent.pricing.map((p, idx) => (
@@ -38,7 +38,7 @@ export default function PricingSection() {
                   scale: 1.06,
                   boxShadow: "0 0 32px 0 #38bdf8, 0 8px 32px 0 #2563eb33",
                   borderColor: "#38bdf8",
-                  transition: { duration: 0.25, ease: "easeInOut" }
+                  transition: { duration: 0.16, ease: "easeInOut" }
                 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={playClick}

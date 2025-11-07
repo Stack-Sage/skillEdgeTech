@@ -20,7 +20,7 @@ export default function TestimonialsCarousel() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.32 }}
             className="max-w-xl mx-auto bg-white/80 rounded-xl shadow p-8 flex flex-col items-center"
           >
             {reviews[idx]?.avatar && (

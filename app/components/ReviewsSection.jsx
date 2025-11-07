@@ -33,7 +33,7 @@ export default function ReviewsSection() {
                 scale: 1.045,
                 boxShadow: "0 0 32px 0 #38bdf8, 0 8px 32px 0 #2563eb33",
                 borderColor: "#38bdf8",
-                transition: { duration: 0.25, ease: "easeInOut" }
+                transition: { duration: 0.15, ease: "easeInOut" }
               }}
               whileTap={{ scale: 0.98 }}
             >

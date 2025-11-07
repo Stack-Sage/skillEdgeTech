@@ -12,7 +12,7 @@ export default function SocialShare({ url, title }) {
         whileHover={{
           scale: 1.1,
           backgroundColor: "#2563eb",
-          transition: { duration: 0.18 }
+          transition: { duration: 0.13 }
         }}
         whileTap={{ scale: 0.97 }}
       >
@@ -27,7 +27,7 @@ export default function SocialShare({ url, title }) {
         whileHover={{
           scale: 1.1,
           backgroundColor: "#1e40af",
-          transition: { duration: 0.18 }
+          transition: { duration: 0.13 }
         }}
         whileTap={{ scale: 0.97 }}
       >
@@ -42,7 +42,7 @@ export default function SocialShare({ url, title }) {
         whileHover={{
           scale: 1.1,
           backgroundColor: "#312e81",
-          transition: { duration: 0.18 }
+          transition: { duration: 0.13 }
         }}
         whileTap={{ scale: 0.97 }}
       >

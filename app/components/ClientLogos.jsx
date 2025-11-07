@@ -25,7 +25,7 @@ export default function ClientLogos() {
               whileHover={{
                 scale: 1.14,
                 boxShadow: "0 0 0 4px #38bdf8, 0 0 24px #38bdf8aa",
-                transition: { duration: 0.22 }
+                transition: { duration: 0.13 }
               }}
               whileTap={{ scale: 0.97 }}
               onClick={playClick}

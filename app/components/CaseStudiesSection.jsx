@@ -31,6 +31,13 @@ export default function CaseStudiesSection() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.7, delay: idx * 0.1, ease: "easeOut" }}
                 onClick={playClick}
+                whileHover={{
+                  scale: 1.045,
+                  boxShadow: "0 0 32px 0 #38bdf8, 0 8px 32px 0 #2563eb33",
+                  borderColor: "#38bdf8",
+                  transition: { duration: 0.15, ease: "easeInOut" }
+                }}
+                whileTap={{ scale: 0.98 }}
               >
                 <h3 className="font-bold text-xl mb-2 text-blue-700">{c.title}</h3>
                 <p className="mb-2 text-blue-900">{c.summary}</p>

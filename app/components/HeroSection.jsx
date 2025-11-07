@@ -136,7 +136,7 @@ export default function HeroSection() {
               transition={{ type: "spring", stiffness: 200, damping: 12 }}
               className="inline-block transition-all"
             >
-              Oceanic Web Experiences
+              Oceanic Web Experiences for Modern Brands
             </motion.span>
           </h1>
           <motion.p

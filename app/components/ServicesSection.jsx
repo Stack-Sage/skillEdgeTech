@@ -19,7 +19,7 @@ export default function ServicesSection() {
         <div className="container-max">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 md:mb-10"
             style={{ color: "#0f172a" }}>
-            Our Services
+            Our Web Design & Development Services
           </h2>
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {siteContent.services.slice(0, 6).map((s, idx) => (
@@ -41,7 +41,7 @@ export default function ServicesSection() {
                   y: -8,
                   boxShadow: "0 8px 32px 0 #38bdf8cc, 0 16px 48px 0 #2563eb33",
                   borderColor: "#38bdf8",
-                  transition: { duration: 0.32, ease: "easeInOut" }
+                  transition: { duration: 0.18, ease: "easeInOut" }
                 }}
                 whileTap={{ scale: 0.98 }}
               >

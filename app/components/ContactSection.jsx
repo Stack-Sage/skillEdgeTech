@@ -46,7 +46,7 @@ export default function ContactSection() {
             className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 md:mb-10 text-center"
             style={{ color: "#0f172a", letterSpacing: ".01em" }}
           >
-            Contact Us
+            Contact Bluvia – Start Your Web Project
           </h2>
           <div
             className="mb-8 text-base sm:text-lg text-center"

@@ -27,7 +27,7 @@ export default function FAQSection() {
                   scale: 1.03,
                   color: "#2563eb",
                   backgroundColor: "#e0e7ff",
-                  transition: { duration: 0.15 }
+                  transition: { duration: 0.11 }
                 }}
                 whileTap={{ scale: 0.97 }}
               >

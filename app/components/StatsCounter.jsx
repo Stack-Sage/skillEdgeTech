@@ -18,7 +18,7 @@ export default function StatsCounter({ stats }) {
     <section ref={ref} className="container-max py-12 flex flex-wrap justify-center gap-8">
       {stats.map((stat, idx) => (
         <div key={idx} className="flex flex-col items-center">
-          <span className="text-4xl font-extrabold text-blue-700">
+          <span className="text-4xl font-extrabold text-blue-700" aria-live="polite">
             {visible ? <AnimatedNumber value={stat.value} /> : 0}
             {stat.suffix}
           </span>

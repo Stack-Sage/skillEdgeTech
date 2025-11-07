@@ -23,8 +23,12 @@ export default function BlogSection() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: idx * 0.1, ease: "easeOut" }}
             >
-              <h3 className="font-bold text-xl mb-2 text-blue-700">{post.title}</h3>
-              <p className="mb-2 text-blue-900">{post.summary}</p>
+              <h3 className="font-bold text-xl mb-2 text-blue-700">
+                {post.title} | Bluvia Web Design Insights
+              </h3>
+              <p className="mb-2 text-blue-900">
+                {post.summary} {/* Add more keyword-rich summary if needed */}
+              </p>
               <motion.a
                 href={post.link}
                 className="text-blue-600 underline inline-block"
