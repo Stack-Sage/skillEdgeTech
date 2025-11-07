@@ -1,23 +1,17 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { siteContent } from "../content";
-import { logo } from "../assets";
+import { useSoundEffect } from "../hooks/useSoundEffect";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const clickSound = useRef(null);
-  const hoverSound = useRef(null);
-
-  const playClick = () => clickSound.current && clickSound.current.play();
-  const playHover = () => hoverSound.current && hoverSound.current.play();
+  const { playClick } = useSoundEffect();
 
   return (
     <>
-      <audio ref={clickSound} src="/assets/sounds/click.mp3" preload="auto" />
-      <audio ref={hoverSound} src="/assets/sounds/hover.mp3" preload="auto" />
       <motion.header
         className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm"
         style={{
@@ -27,42 +21,67 @@ export default function Navbar() {
         initial={{ opacity: 0, y: -24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
+        role="banner"
+        aria-label="Main navigation"
       >
         <div className="container-max flex items-center justify-between py-4">
           <Link
             href="/"
-            className="flex items-center gap-3"
+            className="flex items-center gap-3 group"
             onClick={playClick}
           >
-            <div
-              className="flex items-center justify-center rounded-full bg-white shadow"
+            <motion.div
+              className="flex items-center justify-center rounded-full bg-white/70 backdrop-blur-md shadow-lg border border-blue-200"
               style={{
-                width: 44,
-                height: 44,
-                border: "2px solid #c7d2fe",
+                width: 48,
+                height: 48,
                 overflow: "hidden",
+                padding: 0,
+              }}
+              whileHover={{
+                scale: 1.10,
+                boxShadow: "0 0 24px #38bdf8cc",
+                borderColor: "#38bdf8",
+                transition: { duration: 0.22 },
               }}
             >
               <Image
-                src={logo}
+                src="/assets/logo_round.png"
                 alt={siteContent.companyName}
                 width={44}
                 height={44}
                 style={{
-                  objectFit: "cover",
+                  objectFit: "contain",
                   objectPosition: "center",
                   width: "44px",
                   height: "44px",
+                  maxWidth: "44px",
+                  maxHeight: "44px",
+                  display: "block",
+                  transition: "filter 0.3s",
+                  filter: "drop-shadow(0 0 8px #38bdf8aa)",
+                  background: "transparent"
                 }}
                 decoding="async"
                 priority
               />
-            </div>
-            <span className="font-semibold text-lg" style={{ color: "#0f172a" }}>
-              {siteContent.companyName}
-            </span>
+            </motion.div>
+            <motion.span
+              className="font-semibold text-lg"
+              style={{ color: "#0f172a" }}
+              whileHover={{
+                color: "#2563eb",
+                letterSpacing: "0.07em",
+                transition: { duration: 0.2 }
+              }}
+            >
+              Bluvia
+              <span className="ml-2 text-base font-normal text-[#2563eb] hidden sm:inline">
+                – Modern Web Design &amp; Development
+              </span>
+            </motion.span>
           </Link>
-          <nav className="hidden md:flex gap-8 text-base items-center">
+          <nav className="hidden md:flex gap-8 text-base items-center" aria-label="Primary">
             {["features", "pricing", "portfolio", "contact"].map((id) => (
               <a
                 key={id}
@@ -71,7 +90,6 @@ export default function Navbar() {
                 style={{
                   color: "#2563eb",
                 }}
-                onMouseEnter={playHover}
                 onClick={playClick}
               >
                 {id.charAt(0).toUpperCase() + id.slice(1)}
@@ -85,7 +103,6 @@ export default function Navbar() {
                 color: "#fff",
                 boxShadow: "0 2px 8px 0 rgba(37,99,235,0.10)",
               }}
-              onMouseEnter={playHover}
               onClick={playClick}
             >
               Get started
@@ -125,7 +142,6 @@ export default function Navbar() {
                   style={{
                     color: "#2563eb",
                   }}
-                  onMouseEnter={playHover}
                   onClick={() => {
                     setOpen(false);
                     playClick();
@@ -142,7 +158,6 @@ export default function Navbar() {
                   color: "#fff",
                   boxShadow: "0 2px 8px 0 rgba(37,99,235,0.10)",
                 }}
-                onMouseEnter={playHover}
                 onClick={() => {
                   setOpen(false);
                   playClick();

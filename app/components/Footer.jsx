@@ -14,13 +14,14 @@ export default function Footer() {
     >
       <div className="container-max py-8 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="text-sm" style={{ color: "#a5b4fc" }}>
-          © {new Date().getFullYear()} {siteContent.companyName}
+          © {new Date().getFullYear()} {siteContent.companyName.replace(/SkillEdge/gi, "Bluvia")}
         </div>
         <div className="flex gap-4 text-sm">
           <a
             href={siteContent.contact.instagram}
             className="underline transition"
             style={{ color: "#a5b4fc" }}
+            aria-label="Instagram"
           >
             Instagram
           </a>
@@ -28,6 +29,7 @@ export default function Footer() {
             href={`mailto:${siteContent.contact.email}`}
             className="underline transition"
             style={{ color: "#a5b4fc" }}
+            aria-label="Email"
           >
             Email
           </a>

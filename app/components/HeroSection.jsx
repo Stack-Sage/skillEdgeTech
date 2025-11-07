@@ -2,18 +2,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import {
-  stats,
-  website,
-  restaruant,
-  logo,
-} from "../assets";
 import { siteContent } from "../content";
 
 const heroImages = [
-  { src: stats, alt: "Analytics dashboard illustration" },
-  { src: website, alt: "Modern business website preview" },
-  { src: restaruant, alt: "Restaurant website design" },
+  { src: "/assets/stats.png", alt: "Analytics dashboard illustration" },
+  { src: "/assets/website.png", alt: "Modern business website preview" },
+  { src: "/assets/restaruant.png", alt: "Restaurant website design" },
 ];
 
 export default function HeroSection() {
@@ -54,62 +48,96 @@ export default function HeroSection() {
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
               aria-hidden="true"
-              initial={{ opacity: 0.7, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1.05 }}
+              initial={{ opacity: 0.7, scale: 0.95, rotate: 0 }}
+              animate={{ opacity: 1, scale: 1.05, rotate: 360 }}
               transition={{
                 repeat: Infinity,
-                repeatType: "mirror",
-                duration: 3,
-                ease: "easeInOut",
+                repeatType: "loop",
+                duration: 18,
+                ease: "linear",
               }}
               style={{
                 zIndex: 0,
-                filter: "blur(16px)",
+                filter: "blur(32px)",
               }}
             >
               <div
                 style={{
-                  width: 110,
-                  height: 110,
+                  width: 220,
+                  height: 220,
                   borderRadius: "50%",
                   background:
-                    "linear-gradient(135deg, #a5b4fc 0%, #38bdf8 60%, #fff 100%)",
+                    "radial-gradient(circle at 60% 40%, #38bdf8 0%, #a5b4fc 60%, #fff 100%)",
+                  boxShadow: "0 0 60px 10px #38bdf8, 0 0 120px 40px #2563eb33",
                 }}
               />
             </motion.div>
-            <div
-              className="flex items-center justify-center rounded-full relative"
+            <motion.div
+              className="flex items-center justify-center rounded-full relative shadow-2xl group bg-white/70 backdrop-blur-md border border-blue-200"
               style={{
-                width: 90,
-                height: 90,
-                background: "#fff",
-                border: "3px solid #c7d2fe",
-                boxShadow: "0 4px 24px 0 rgba(37,99,235,0.10)",
+                width: 180,
+                height: 180,
                 overflow: "hidden",
                 zIndex: 1,
+                background: "transparent"
               }}
+              whileHover={{
+                scale: 1.10,
+                rotate: [0, 8, -8, 0],
+                boxShadow: "0 0 64px 0 #38bdf8, 0 8px 40px 0 #2563eb55",
+                borderColor: "#38bdf8",
+                transition: { duration: 0.7, ease: "easeInOut" }
+              }}
+              whileTap={{ scale: 0.96 }}
             >
               <Image
-                src={logo}
+                src="/assets/logo_round.png"
                 alt={siteContent.companyName}
-                width={90}
-                height={90}
+                width={180}
+                height={180}
                 style={{
-                  objectFit: "cover",
+                  objectFit: "contain",
                   objectPosition: "center",
-                  width: "90px",
-                  height: "90px",
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: 180,
+                  maxHeight: 180,
+                  display: "block",
+                  transition: "filter 0.3s",
+                  filter: "drop-shadow(0 0 24px #38bdf8aa)",
+                  background: "transparent"
                 }}
                 priority
                 decoding="async"
               />
-            </div>
-            <span className="mt-5 text-3xl md:text-4xl font-extrabold text-blue-900 text-center drop-shadow-sm z-10">
-              {siteContent.companyName}
-            </span>
+              {/* Animated glow ring */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                initial={{ opacity: 0.5, scale: 1 }}
+                animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.08, 1] }}
+                transition={{
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 2.8,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  borderRadius: "50%",
+                  border: "4px solid #38bdf8",
+                  boxShadow: "0 0 32px #38bdf8aa",
+                }}
+              />
+            </motion.div>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight text-blue-900 drop-shadow-lg text-center md:text-left mb-4">
-            Oceanic Web Experiences
+            <motion.span
+              initial={{ letterSpacing: "0.01em" }}
+              whileHover={{ letterSpacing: "0.08em", color: "#2563eb" }}
+              transition={{ type: "spring", stiffness: 200, damping: 12 }}
+              className="inline-block transition-all"
+            >
+              Oceanic Web Experiences
+            </motion.span>
           </h1>
           <motion.p
             className="mt-2 text-lg sm:text-xl md:text-2xl text-blue-700 max-w-2xl text-center md:text-left mb-6"
@@ -117,7 +145,7 @@ export default function HeroSection() {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 1 }}
           >
-            {siteContent.tagline}
+            {siteContent.tagline.replace(/SkillEdge/gi, "Bluvia")}
           </motion.p>
           <motion.div
             className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start"
@@ -128,7 +156,12 @@ export default function HeroSection() {
             <motion.a
               href="/signup"
               className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold oceanic-gradient text-white shadow scale-hover scale-press text-lg sm:text-xl"
-              whileHover={{ scale: 1.07 }}
+              whileHover={{
+                scale: 1.12,
+                background: "linear-gradient(90deg, #38bdf8 0%, #2563eb 100%)",
+                boxShadow: "0 0 32px #38bdf8aa",
+                transition: { duration: 0.25 }
+              }}
               whileTap={{ scale: 0.97 }}
             >
               Get started
@@ -136,7 +169,13 @@ export default function HeroSection() {
             <motion.a
               href="#features"
               className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold border border-blue-200 bg-white/70 text-blue-900 text-lg sm:text-xl"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{
+                scale: 1.08,
+                background: "linear-gradient(90deg, #e0e7ff 0%, #a5b4fc 100%)",
+                color: "#2563eb",
+                boxShadow: "0 0 16px #a5b4fc88",
+                transition: { duration: 0.25 }
+              }}
               whileTap={{ scale: 0.97 }}
             >
               Learn more
@@ -187,7 +226,7 @@ export default function HeroSection() {
                 </motion.div>
               ))}
             </div>
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10" role="tablist" aria-label="Hero image carousel">
               {heroImages.map((_, idx) => (
                 <button
                   key={idx}
@@ -203,8 +242,12 @@ export default function HeroSection() {
                     justifyContent: "center",
                   }}
                   aria-label={`Show hero image ${idx + 1}`}
+                  aria-selected={current === idx}
                   tabIndex={0}
                   onClick={() => setCurrent(idx)}
+                  onKeyDown={e => {
+                    if (e.key === "Enter" || e.key === " ") setCurrent(idx);
+                  }}
                 />
               ))}
             </div>

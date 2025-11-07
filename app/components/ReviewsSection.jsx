@@ -20,7 +20,7 @@ export default function ReviewsSection() {
           {siteContent.reviews.map((r, idx) => (
             <motion.blockquote
               key={idx}
-              className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/20 shadow-sm"
+              className="relative overflow-hidden glossy-card p-4 sm:p-6 md:p-8 rounded-2xl border border-white/20 shadow-sm flex items-center gap-4"
               style={{
                 background: "transparent",
                 color: "#0f172a"
@@ -31,19 +31,22 @@ export default function ReviewsSection() {
               transition={{ duration: 0.9, delay: idx * 0.12, ease: "easeOut" }}
               whileHover={{
                 scale: 1.045,
-                boxShadow: "0 0 32px 0 rgba(139,92,246,0.25), 0 8px 32px 0 rgba(37,99,235,0.10)",
-                transition: { duration: 0.35, ease: "easeInOut" }
+                boxShadow: "0 0 32px 0 #38bdf8, 0 8px 32px 0 #2563eb33",
+                borderColor: "#38bdf8",
+                transition: { duration: 0.25, ease: "easeInOut" }
               }}
               whileTap={{ scale: 0.98 }}
             >
-              <p className="text-base sm:text-lg md:text-xl font-medium leading-relaxed"
-                 style={{ color: "#2563eb" }}>
-                “{r.text}”
-              </p>
-              <footer className="mt-4 sm:mt-6 text-base sm:text-lg font-semibold"
-                      style={{ color: "#64748b" }}>
-                — {r.name}
-              </footer>
+              <div>
+                <p className="text-base sm:text-lg md:text-xl font-medium leading-relaxed"
+                   style={{ color: "#2563eb" }}>
+                  “{r.text}”
+                </p>
+                <footer className="mt-4 sm:mt-6 text-base sm:text-lg font-semibold"
+                        style={{ color: "#64748b" }}>
+                  — {r.name}
+                </footer>
+              </div>
             </motion.blockquote>
           ))}
         </div>
