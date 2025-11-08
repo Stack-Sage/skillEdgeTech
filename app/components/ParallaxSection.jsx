@@ -2,19 +2,21 @@
 import { useRef, useEffect } from "react";
 
 const sections = [];
+let ticking = false;
 
 function updateAll() {
   const scrollY = window.scrollY || window.pageYOffset;
   const windowHeight = window.innerHeight;
-  for (const { ref, speed, lastOffset } of sections) {
-    if (!ref.current) continue;
+  for (const { ref, speed, lastOffset, cached } of sections) {
+    if (!ref.current || !cached.top) continue;
     const isMobile = window.innerWidth < 768;
     const effectiveSpeed = isMobile ? 0 : speed;
-    const rect = ref.current.getBoundingClientRect();
-    const sectionTop = rect.top + scrollY;
-    const sectionCenter = sectionTop + rect.height / 2;
+    // Use cached values for section position and height
+    const sectionTop = cached.top;
+    const sectionHeight = cached.height;
+    const sectionCenter = sectionTop + sectionHeight / 2;
     const distance = (scrollY + windowHeight / 2) - sectionCenter;
-    const offset = distance * effectiveSpeed;
+    const offset = Math.round(distance * effectiveSpeed * 100) / 100;
     if (lastOffset.current !== offset) {
       ref.current.style.transform = `translateY(${offset}px)`;
       lastOffset.current = offset;
@@ -23,37 +25,31 @@ function updateAll() {
   window.requestAnimationFrame(updateAll);
 }
 
+function recacheAll() {
+  for (const { ref, cached } of sections) {
+    if (!ref.current) continue;
+    const rect = ref.current.getBoundingClientRect();
+    cached.top = rect.top + window.scrollY;
+    cached.height = rect.height;
+  }
+}
+
 if (typeof window !== "undefined" && !window.__parallaxRAF) {
   window.__parallaxRAF = true;
   window.requestAnimationFrame(updateAll);
+  window.addEventListener("resize", () => {
+    recacheAll();
+  });
+  window.addEventListener("orientationchange", () => {
+    recacheAll();
+  });
 }
 
-export default function ParallaxSection({ speed = 0.15, children, className = "", style = {}, ...props }) {
-  const ref = useRef();
-  const lastOffset = useRef(0);
-
-  useEffect(() => {
-    const entry = { ref, speed, lastOffset };
-    sections.push(entry);
-    // Initial update
-    if (typeof window !== "undefined") {
-      updateAll();
-    }
-    return () => {
-      const idx = sections.indexOf(entry);
-      if (idx !== -1) sections.splice(idx, 1);
-    };
-  }, [speed]);
-
+export default function ParallaxSection({ children, className = "", style = {}, ...props }) {
   return (
     <section
-      ref={ref}
       className={className}
-      style={{
-        ...style,
-        willChange: "transform",
-        transition: "transform 0.06s cubic-bezier(.4,0,.2,1)",
-      }}
+      style={style}
       {...props}
     >
       {children}

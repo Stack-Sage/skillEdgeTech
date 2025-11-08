@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { siteContent } from "../content";
 
 export default function ContactSection() {
@@ -32,13 +31,9 @@ export default function ContactSection() {
   }
 
   return (
-    <motion.section
+    <section
       id="contact"
-      className="relative px-2"
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      className="relative px-2 py-16"
     >
       <div className="relative z-10">
         <div className="container-max">
@@ -72,7 +67,7 @@ export default function ContactSection() {
             </span>
           </div>
           {!submitted ? (
-            <motion.form
+            <form
               onSubmit={handleSubmit}
               className="relative grid gap-8 grid-cols-1 sm:grid-cols-2 p-6 sm:p-10 rounded-2xl border border-white/20 shadow-xl glossy-card bg-white/80 backdrop-blur-md"
               style={{
@@ -80,16 +75,6 @@ export default function ContactSection() {
                 maxWidth: 540,
                 margin: "0 auto",
                 boxShadow: "0 8px 40px 0 #2563eb22, 0 2px 8px 0 #38bdf822",
-              }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              whileHover={{
-                scale: 1.03,
-                boxShadow:
-                  "0 0 32px 0 rgba(139,92,246,0.18), 0 8px 32px 0 rgba(37,99,235,0.08)",
-                transition: { duration: 0.35, ease: "easeInOut" },
               }}
             >
               <div className="flex flex-col gap-2 sm:col-span-2">
@@ -189,28 +174,21 @@ export default function ContactSection() {
                   {error}
                 </div>
               )}
-              <motion.button
+              <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold shadow sm:col-span-2 text-base sm:text-lg transition-transform mt-2"
+                className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold shadow sm:col-span-2 text-base sm:text-lg transition-transform duration-150 hover:scale-105 mt-2"
                 style={{
                   background: "linear-gradient(90deg, #0ea5e9 0%, #2563eb 100%)",
                   color: "#fff",
                   letterSpacing: ".02em",
                   boxShadow: "0 2px 8px 0 #38bdf822",
                 }}
-                whileHover={{
-                  scale: 1.08,
-                  background: "linear-gradient(90deg, #38bdf8 0%, #2563eb 100%)",
-                  boxShadow: "0 0 24px #38bdf8aa",
-                  transition: { duration: 0.18 },
-                }}
-                whileTap={{ scale: 0.97 }}
               >
                 Send message
-              </motion.button>
-            </motion.form>
+              </button>
+            </form>
           ) : (
-            <motion.div
+            <div
               className="p-6 sm:p-10 rounded-2xl border border-white/20 shadow-xl text-base sm:text-lg font-semibold glossy-card bg-white/80 backdrop-blur-md text-center"
               style={{
                 color: "#0f172a",
@@ -218,25 +196,16 @@ export default function ContactSection() {
                 margin: "0 auto",
                 boxShadow: "0 8px 40px 0 #2563eb22, 0 2px 8px 0 #38bdf822",
               }}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              whileHover={{
-                scale: 1.025,
-                boxShadow:
-                  "0 0 32px 0 rgba(139,92,246,0.18), 0 8px 32px 0 rgba(37,99,235,0.08)",
-                transition: { duration: 0.35, ease: "easeInOut" },
-              }}
             >
               <span className="block text-2xl mb-2 text-blue-700">Thank you!</span>
               <span className="block mb-2">Your message has been received.</span>
               <span className="block text-sm text-blue-500">
                 (Integrate EmailJS/Nodemailer to wire real submissions.)
               </span>
-            </motion.div>
+            </div>
           )}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

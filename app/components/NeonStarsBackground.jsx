@@ -1,9 +1,21 @@
 'use client'
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function NeonStarsBackground() {
   const canvasRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 768);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     let width = window.innerWidth;
@@ -13,7 +25,7 @@ export default function NeonStarsBackground() {
 
     let animationId;
     const ctx = canvas.getContext("2d");
-    const STAR_COUNT = Math.floor(width / 12);
+    const STAR_COUNT = Math.floor(width / 18); // fewer stars for perf
     const stars = Array.from({ length: STAR_COUNT }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -74,24 +86,9 @@ export default function NeonStarsBackground() {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [isMobile]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 w-full h-full z-0 pointer-events-none"
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        zIndex: 0,
-        pointerEvents: "none",
-        opacity: 0.7,
-        mixBlendMode: "lighter",
-      }}
-      aria-hidden="true"
-    />
-  );
+  if (isMobile) return null;
+
+  return null;
 }

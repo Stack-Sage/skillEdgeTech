@@ -1,4 +1,4 @@
-/* eslint-disable @next/next-script-for-ga */
+
 import "./globals.css";
 import { defaultSEO } from "./utils/seo";
 import { siteContent } from "./content";
