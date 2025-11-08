@@ -12,19 +12,13 @@ export default function ReviewsSection() {
           {siteContent.reviews.map((r, idx) => (
             <blockquote
               key={idx}
-              className="relative overflow-hidden glossy-card p-4 sm:p-6 md:p-8 rounded-2xl border border-white/20 shadow-sm flex items-center gap-4 transition-transform duration-150 hover:scale-105"
-              style={{
-                background: "transparent",
-                color: "#0f172a"
-              }}
+              className="relative glossy-card card-content flex items-center gap-4 transition-transform duration-150 hover:scale-105"
             >
               <div>
-                <p className="text-base sm:text-lg md:text-xl font-medium leading-relaxed"
-                   style={{ color: "#2563eb" }}>
+                <p className="text-base sm:text-lg md:text-xl font-medium leading-relaxed text-primary">
                   “{r.text}”
                 </p>
-                <footer className="mt-4 sm:mt-6 text-base sm:text-lg font-semibold"
-                        style={{ color: "#64748b" }}>
+                <footer className="mt-4 sm:mt-6 text-base sm:text-lg font-semibold text-secondary">
                   — {r.name}
                 </footer>
               </div>

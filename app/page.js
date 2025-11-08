@@ -35,10 +35,7 @@ export default function Home() {
 			<StickyCTA />
 			<div
 				className="w-full"
-				style={{
-					background:
-						"linear-gradient(135deg, #f8fafc 0%, #ede9fe 25%, #e0e7ef 50%, #c7d2fe 75%, #a5b4fc 100%)"
-				}}
+				
 			>
 				<section className="pt-[100px] md:pt-[200px] pb-14 md:pb-20">
 					<HeroSection />

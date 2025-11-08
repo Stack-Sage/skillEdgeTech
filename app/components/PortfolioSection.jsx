@@ -26,11 +26,7 @@ export default function PortfolioSection() {
           {portfolioImages.map((p, idx) => (
             <div
               key={p.name}
-              className="relative overflow-hidden glossy-card rounded-2xl border border-white/20 shadow-sm transition-transform duration-150 hover:scale-105"
-              style={{
-                background: "transparent",
-                color: "#0f172a"
-              }}
+              className="relative glossy-card card-content rounded-2xl transition-transform duration-150 hover:scale-105"
               onClick={playClick}
             >
               <div>
@@ -39,14 +35,13 @@ export default function PortfolioSection() {
                   alt={`${p.name} preview`}
                   width={400}
                   height={180}
-                  className="w-full h-32 sm:h-40 md:h-48 object-cover"
+                  className="w-full h-32 sm:h-40 md:h-48 object-cover rounded-xl"
                   loading={idx === 0 ? "eager" : "lazy"}
                   decoding="async"
                   sizes="(max-width: 768px) 100vw, 400px"
                 />
               </div>
-              <figcaption className="p-3 sm:p-4 font-semibold text-base sm:text-lg"
-                  style={{ color: "#2563eb" }}>
+              <figcaption className="p-3 sm:p-4 font-semibold text-base sm:text-lg text-primary">
                 {p.name}
               </figcaption>
             </div>

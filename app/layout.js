@@ -1,4 +1,3 @@
-
 import "./globals.css";
 import { defaultSEO } from "./utils/seo";
 import { siteContent } from "./content";
@@ -87,42 +86,83 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className="font-sans text-[#0F172A] min-h-screen scrollbar-thin scrollbar-thumb-[#38bdf8] scrollbar-track-[#e0e7ff]"
+        className="font-sans min-h-screen scrollbar-thin scrollbar-thumb-[#bfeff3] scrollbar-track-[#eaf7f9]"
         style={{
-          background:
-            "radial-gradient(ellipse at 50% 40%, #fff 0%, #e0e7ff 35%, #38bdf8 70%, #2563eb 90%, #312e81 100%)",
           position: "relative",
           overflowX: "hidden",
+          background:
+            "linear-gradient(120deg, #fafdff 0%, #e0f7fa 20%, #bff6f9 50%, #5edfff 80%, #00e5b0 100%)",
         }}
       >
-        {/* SVG background effect */}
-        <svg
+        {/* SVG background effect with glowing/soft color effects and a strong oceanic gradient */}
+        <div
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 w-full h-full z-0"
-          style={{ opacity: 0.22 }} // increased from 0.13 for more vibrancy
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            zIndex: 0,
+            pointerEvents: "none",
+            overflow: "hidden",
+            background:
+              "radial-gradient(ellipse at 50% 40%, #fff 0%, #e0f7fa 25%, #bff6f9 55%, #5edfff 80%, #00e5b0 100%)"
+          }}
         >
-          <defs>
-            <radialGradient id="bg-gradient" cx="50%" cy="40%" r="80%">
-              <stop offset="0%" stopColor="#fff" />
-              <stop offset="20%" stopColor="#e0f2fe" />
-              <stop offset="35%" stopColor="#e0e7ff" />
-              <stop offset="60%" stopColor="#a5b4fc" />
-              <stop offset="80%" stopColor="#38bdf8" />
-              <stop offset="90%" stopColor="#2563eb" />
-              <stop offset="100%" stopColor="#312e81" />
-            </radialGradient>
-            <filter id="noise" x="0" y="0">
-              <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" result="turb" />
-              <feColorMatrix type="saturate" values="0.7" />
-              <feBlend in="SourceGraphic" in2="turb" mode="multiply" />
-            </filter>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#bg-gradient)" filter="url(#noise)" />
-          <circle cx="80%" cy="12%" r="160" fill="#38bdf8" opacity="0.18" />
-          <circle cx="18%" cy="85%" r="120" fill="#2563eb" opacity="0.14" />
-          <circle cx="50%" cy="60%" r="90" fill="#312e81" opacity="0.12" />
-          <circle cx="60%" cy="80%" r="60" fill="#a5b4fc" opacity="0.13" />
-        </svg>
+          <svg
+            width="100%"
+            height="100%"
+            style={{
+              width: "100vw",
+              height: "100vh",
+              minWidth: "100vw",
+              minHeight: "100vh",
+              display: "block",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              pointerEvents: "none",
+              userSelect: "none"
+            }}
+            focusable="false"
+          >
+            <defs>
+              <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fafdff" />
+                <stop offset="20%" stopColor="#e0f7fa" />
+                <stop offset="50%" stopColor="#bff6f9" />
+                <stop offset="80%" stopColor="#5edfff" />
+                <stop offset="100%" stopColor="#00e5b0" />
+              </linearGradient>
+              <filter id="noise" x="0" y="0">
+                <feTurbulence type="fractalNoise" baseFrequency="0.42" numOctaves="2" result="turb" />
+                <feColorMatrix type="saturate" values="0.95" />
+                <feBlend in="SourceGraphic" in2="turb" mode="multiply" />
+              </filter>
+              <radialGradient id="glow-cyan" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#5edfff" stopOpacity="0.38" />
+                <stop offset="100%" stopColor="#5edfff" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#00e5b0" stopOpacity="0.22" />
+                <stop offset="100%" stopColor="#00e5b0" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="glow-blue" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#0099cc" stopOpacity="0.13" />
+                <stop offset="100%" stopColor="#0099cc" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#bg-gradient)" filter="url(#noise)" />
+            {/* Soft glowing color blobs */}
+            <circle cx="80%" cy="12%" r="180" fill="url(#glow-cyan)" />
+            <circle cx="18%" cy="85%" r="140" fill="url(#glow-green)" />
+            <circle cx="50%" cy="60%" r="110" fill="url(#glow-blue)" />
+            <circle cx="60%" cy="80%" r="80" fill="url(#glow-cyan)" />
+            {/* Subtle white highlight */}
+            <ellipse cx="60%" cy="18%" rx="120" ry="40" fill="#fff" opacity="0.08" filter="blur(12px)" />
+          </svg>
+        </div>
         <Navbar />
         <main id="main-content" className="relative z-10">
           {children}

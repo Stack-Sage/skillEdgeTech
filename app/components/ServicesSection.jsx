@@ -15,17 +15,13 @@ export default function ServicesSection() {
           {siteContent.services.slice(0, 6).map((s, idx) => (
             <div
               key={s.id}
-              className="relative overflow-hidden glossy-card p-4 sm:p-6 md:p-8 rounded-2xl border border-white/20 shadow-sm transition-transform duration-150 hover:scale-105"
-              style={{
-                background: "transparent",
-                color: "#0f172a"
-              }}
+              className="relative glossy-card card-content transition-transform duration-150 hover:scale-105"
               onClick={playClick}
             >
-              <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-2 md:mb-3" style={{ color: "#2563eb" }}>
+              <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-2 md:mb-3 text-main">
                 {s.title}
               </h3>
-              <p className="text-sm sm:text-base md:text-lg" style={{ color: "#64748b" }}>
+              <p className="text-sm sm:text-base md:text-lg text-secondary">
                 {s.desc}
               </p>
             </div>

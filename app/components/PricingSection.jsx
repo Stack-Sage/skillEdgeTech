@@ -16,23 +16,16 @@ export default function PricingSection() {
           {siteContent.pricing.map((p, idx) => (
             <div
               key={idx}
-              className="relative overflow-hidden glossy-card p-4 sm:p-6 md:p-8 rounded-2xl border border-white/20 shadow-sm text-center transition-transform duration-150 hover:scale-105"
-              style={{
-                background: "transparent",
-                color: "#0f172a"
-              }}
+              className="relative glossy-card card-content text-center transition-transform duration-150 hover:scale-105"
               onClick={playClick}
             >
-              <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-1 md:mb-2"
-                style={{ color: "#2563eb" }}>
+              <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-1 md:mb-2 text-primary">
                 {p.tier}
               </h3>
-              <p className="mt-1 text-2xl sm:text-3xl md:text-4xl font-extrabold"
-                style={{ color: "#0ea5e9" }}>
+              <p className="mt-1 text-2xl sm:text-3xl md:text-4xl font-extrabold text-accent">
                 {p.price}
               </p>
-              <ul className="mt-4 space-y-1 sm:space-y-2 text-sm sm:text-base md:text-lg"
-                style={{ color: "#64748b" }}>
+              <ul className="mt-4 space-y-1 sm:space-y-2 text-sm sm:text-base md:text-lg text-secondary">
                 {p.features.map((f, idx2) => (
                   <li key={idx2} className="pl-2">
                     • {f}
@@ -42,11 +35,7 @@ export default function PricingSection() {
               <div className="mt-6 md:mt-8">
                 <a
                   href="/signup"
-                  className="inline-flex items-center justify-center rounded-full px-5 py-2.5 font-semibold shadow text-base sm:text-lg transition-transform duration-150 hover:scale-105"
-                  style={{
-                    background: "linear-gradient(90deg, #0ea5e9 0%, #2563eb 100%)",
-                    color: "#fff"
-                  }}
+                  className="inline-flex items-center justify-center rounded-full px-5 py-2.5 font-semibold btn-primary hover-glow text-base sm:text-lg"
                   onClick={playClick}
                 >
                   Choose

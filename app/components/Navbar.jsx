@@ -11,10 +11,14 @@ export default function Navbar() {
 
   return (
     <header
-      className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm"
+      className="fixed top-0 left-0 w-full z-50 border-b border-divider shadow-sm backdrop-blur-md"
       style={{
-        background: "rgba(255,255,255,0.7)",
-        borderBottom: "1px solid #7dd3fc",
+        background:
+          "linear-gradient(135deg, #e0f7fa 0%, #bff6f9 60%, #5edfff 100%)",
+        boxShadow: "0 2px 12px 0 #bfeff355",
+        color: "#0e2e3b",
+        // Slightly darker than main background
+        borderBottom: "1.5px solid #d9e6e9",
       }}
       role="banner"
       aria-label="Main navigation"
@@ -26,7 +30,7 @@ export default function Navbar() {
           onClick={playClick}
         >
           <div
-            className="flex items-center justify-center rounded-full bg-white/70 backdrop-blur-md shadow-lg border border-blue-200 transition-transform duration-150 hover:scale-110"
+            className="flex items-center justify-center rounded-full bg-white/70 backdrop-blur-md shadow-lg border border-divider transition-transform duration-150 hover:scale-110"
             style={{
               width: 48,
               height: 48,
@@ -39,28 +43,16 @@ export default function Navbar() {
               alt={siteContent.companyName}
               width={44}
               height={44}
-              style={{
-                objectFit: "contain",
-                objectPosition: "center",
-                width: "44px",
-                height: "44px",
-                maxWidth: "44px",
-                maxHeight: "44px",
-                display: "block",
-                transition: "filter 0.3s",
-                filter: "drop-shadow(0 0 8px #38bdf8aa)",
-                background: "transparent"
-              }}
+              className="object-contain"
               decoding="async"
               priority
             />
           </div>
           <span
-            className="font-semibold text-lg group-hover:text-[#2563eb] transition-colors duration-150"
-            style={{ color: "#0f172a" }}
+            className="font-semibold text-lg group-hover:text-primary transition-colors duration-150 text-main"
           >
             Bluvia
-            <span className="ml-2 text-base font-normal text-[#2563eb] hidden sm:inline">
+            <span className="ml-2 text-base font-normal text-primary hidden sm:inline">
               – Modern Web Design &amp; Development
             </span>
           </span>
@@ -70,10 +62,7 @@ export default function Navbar() {
             <a
               key={id}
               href={`#${id}`}
-              className="transition font-medium px-2 py-1 rounded hover:bg-blue-50"
-              style={{
-                color: "#2563eb",
-              }}
+              className="transition font-medium px-2 py-1 rounded hover:bg-primary-light/30 text-primary-dark"
               onClick={playClick}
             >
               {id.charAt(0).toUpperCase() + id.slice(1)}
@@ -81,12 +70,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/signup"
-            className="ml-6 inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition-transform duration-150 hover:scale-105"
-            style={{
-              background: "linear-gradient(90deg, #0ea5e9 0%, #2563eb 100%)",
-              color: "#fff",
-              boxShadow: "0 2px 8px 0 rgba(37,99,235,0.10)",
-            }}
+            className="ml-6 inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold btn-primary hover-glow"
             onClick={playClick}
           >
             Get started
@@ -98,7 +82,7 @@ export default function Navbar() {
               setOpen(!open);
               playClick();
             }}
-            className="p-2 rounded-md border bg-white text-[#0f172a]"
+            className="p-2 rounded-md border bg-white/90 text-main"
             aria-label="Toggle menu"
           >
             {open ? "Close" : "Menu"}
@@ -110,8 +94,8 @@ export default function Navbar() {
           className="md:hidden container-max rounded-b-xl p-4 shadow transition-all"
           style={{
             background:
-              "linear-gradient(135deg, #e0f7fa 0%, #b3c6ff 60%, #a7f3d0 100%)",
-            borderBottom: "1px solid #7dd3fc",
+              "linear-gradient(135deg, #e0f7fa 0%, #bff6f9 60%, #5edfff 100%)",
+            borderBottom: "1.5px solid #d9e6e9",
           }}
         >
           <div className="flex flex-col gap-4">
@@ -119,10 +103,7 @@ export default function Navbar() {
               <a
                 key={id}
                 href={`#${id}`}
-                className="transition font-medium px-2 py-2 rounded hover:bg-blue-50"
-                style={{
-                  color: "#2563eb",
-                }}
+                className="transition font-medium px-2 py-2 rounded hover:bg-primary-light/30 text-primary-dark"
                 onClick={() => {
                   setOpen(false);
                   playClick();
@@ -133,12 +114,7 @@ export default function Navbar() {
             ))}
             <Link
               href="/signup"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition-transform duration-150 hover:scale-105"
-              style={{
-                background: "linear-gradient(90deg, #0ea5e9 0%, #2563eb 100%)",
-                color: "#fff",
-                boxShadow: "0 2px 8px 0 rgba(37,99,235,0.10)",
-              }}
+              className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold btn-primary hover-glow"
               onClick={() => {
                 setOpen(false);
                 playClick();
