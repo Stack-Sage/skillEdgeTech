@@ -26,10 +26,10 @@ export default function PortfolioSection() {
           {portfolioImages.map((p, idx) => (
             <div
               key={p.name}
-              className="relative glossy-card card-content rounded-2xl transition-transform duration-150 hover:scale-105"
+              className="relative glossy-card card-content rounded-2xl transition-transform duration-150 hover:scale-105 flex flex-col items-center text-center"
               onClick={playClick}
             >
-              <div>
+              <div className="w-full flex justify-center">
                 <Image
                   src={p.img}
                   alt={`${p.name} preview`}

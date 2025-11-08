@@ -15,7 +15,7 @@ export default function ServicesSection() {
           {siteContent.services.slice(0, 6).map((s, idx) => (
             <div
               key={s.id}
-              className="relative glossy-card card-content transition-transform duration-150 hover:scale-105"
+              className="relative glossy-card card-content transition-transform duration-150 hover:scale-105 flex flex-col items-center text-center"
               onClick={playClick}
             >
               <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-2 md:mb-3 text-main">

@@ -16,7 +16,7 @@ export default function PricingSection() {
           {siteContent.pricing.map((p, idx) => (
             <div
               key={idx}
-              className="relative glossy-card card-content text-center transition-transform duration-150 hover:scale-105"
+              className="relative glossy-card card-content text-center transition-transform duration-150 hover:scale-105 flex flex-col items-center"
               onClick={playClick}
             >
               <h3 className="font-bold text-lg sm:text-xl md:text-2xl mb-1 md:mb-2 text-primary">
@@ -25,7 +25,7 @@ export default function PricingSection() {
               <p className="mt-1 text-2xl sm:text-3xl md:text-4xl font-extrabold text-accent">
                 {p.price}
               </p>
-              <ul className="mt-4 space-y-1 sm:space-y-2 text-sm sm:text-base md:text-lg text-secondary">
+              <ul className="mt-4 space-y-1 sm:space-y-2 text-sm sm:text-base md:text-lg text-secondary text-center">
                 {p.features.map((f, idx2) => (
                   <li key={idx2} className="pl-2">
                     • {f}

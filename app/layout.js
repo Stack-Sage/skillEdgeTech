@@ -35,6 +35,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // Remove all DOM event code from the component body.
+  // Instead, inject a script that handles mousemove for the background glow.
+
   return (
     <html lang="en">
       <head>
@@ -86,16 +89,17 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className="font-sans min-h-screen scrollbar-thin scrollbar-thumb-[#bfeff3] scrollbar-track-[#eaf7f9]"
+        className="font-sans min-h-screen scrollbar-thin scrollbar-thumb-[#bfeff3] scrollbar-track-[#eaf7f9] selection:bg-primary-light/40 selection:text-primary-dark transition-colors"
         style={{
           position: "relative",
           overflowX: "hidden",
           background:
-            "linear-gradient(120deg, #fafdff 0%, #e0f7fa 20%, #bff6f9 50%, #5edfff 80%, #00e5b0 100%)",
+            "linear-gradient(120deg, #fafdff 0%, #e6f6fa 20%, #c7eaf6 50%, #aee7f7 80%, #5edfff 100%)",
         }}
       >
-        {/* SVG background effect with glowing/soft color effects and a strong oceanic gradient */}
+        {/* SVG background effect with interactive overlay */}
         <div
+          className="layout-bg-interactive"
           aria-hidden="true"
           style={{
             position: "fixed",
@@ -107,7 +111,7 @@ export default function RootLayout({ children }) {
             pointerEvents: "none",
             overflow: "hidden",
             background:
-              "radial-gradient(ellipse at 50% 40%, #fff 0%, #e0f7fa 25%, #bff6f9 55%, #5edfff 80%, #00e5b0 100%)"
+              "radial-gradient(ellipse at 50% 40%, #fff 0%, #e6f6fa 25%, #c7eaf6 55%, #aee7f7 80%, #5edfff 100%)"
           }}
         >
           <svg
@@ -130,44 +134,117 @@ export default function RootLayout({ children }) {
             <defs>
               <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#fafdff" />
-                <stop offset="20%" stopColor="#e0f7fa" />
-                <stop offset="50%" stopColor="#bff6f9" />
-                <stop offset="80%" stopColor="#5edfff" />
-                <stop offset="100%" stopColor="#00e5b0" />
+                <stop offset="20%" stopColor="#e6f6fa" />
+                <stop offset="50%" stopColor="#c7eaf6" />
+                <stop offset="80%" stopColor="#aee7f7" />
+                <stop offset="100%" stopColor="#5edfff" />
               </linearGradient>
               <filter id="noise" x="0" y="0">
-                <feTurbulence type="fractalNoise" baseFrequency="0.42" numOctaves="2" result="turb" />
-                <feColorMatrix type="saturate" values="0.95" />
+                <feTurbulence type="fractalNoise" baseFrequency="0.38" numOctaves="2" result="turb" />
+                <feColorMatrix type="saturate" values="0.92" />
                 <feBlend in="SourceGraphic" in2="turb" mode="multiply" />
               </filter>
               <radialGradient id="glow-cyan" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#5edfff" stopOpacity="0.38" />
+                <stop offset="0%" stopColor="#5edfff" stopOpacity="0.22" />
                 <stop offset="100%" stopColor="#5edfff" stopOpacity="0" />
               </radialGradient>
               <radialGradient id="glow-green" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#00e5b0" stopOpacity="0.22" />
+                <stop offset="0%" stopColor="#00e5b0" stopOpacity="0.13" />
                 <stop offset="100%" stopColor="#00e5b0" stopOpacity="0" />
               </radialGradient>
               <radialGradient id="glow-blue" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#0099cc" stopOpacity="0.13" />
+                <stop offset="0%" stopColor="#0099cc" stopOpacity="0.09" />
                 <stop offset="100%" stopColor="#0099cc" stopOpacity="0" />
               </radialGradient>
             </defs>
             <rect width="100%" height="100%" fill="url(#bg-gradient)" filter="url(#noise)" />
-            {/* Soft glowing color blobs */}
-            <circle cx="80%" cy="12%" r="180" fill="url(#glow-cyan)" />
-            <circle cx="18%" cy="85%" r="140" fill="url(#glow-green)" />
-            <circle cx="50%" cy="60%" r="110" fill="url(#glow-blue)" />
-            <circle cx="60%" cy="80%" r="80" fill="url(#glow-cyan)" />
+            {/* Subtle, professional glowing color blobs */}
+            <circle cx="80%" cy="12%" r="140" fill="url(#glow-cyan)" />
+            <circle cx="18%" cy="85%" r="100" fill="url(#glow-green)" />
+            <circle cx="50%" cy="60%" r="80" fill="url(#glow-blue)" />
+            <circle cx="60%" cy="80%" r="60" fill="url(#glow-cyan)" />
             {/* Subtle white highlight */}
-            <ellipse cx="60%" cy="18%" rx="120" ry="40" fill="#fff" opacity="0.08" filter="blur(12px)" />
+            <ellipse cx="60%" cy="18%" rx="90" ry="30" fill="#fff" opacity="0.06" filter="blur(10px)" />
           </svg>
+          {/* Interactive mouse-following glow */}
+          <div
+            className="layout-bg-glow"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: "100vw",
+              height: "100vh",
+              pointerEvents: "none",
+              zIndex: 2,
+              background:
+                "radial-gradient(50px at var(--bg-mouse-x,50vw) var(--bg-mouse-y,50vh), #5edfff77 0%, #00e5b044 60%, transparent 100%)",
+              transition: "background 0.13s cubic-bezier(.4,0,.2,1)",
+              mixBlendMode: "lighten"
+            }}
+          />
         </div>
         <Navbar />
         <main id="main-content" className="relative z-10">
           {children}
         </main>
         <Footer />
+        {/* Interactive background CSS */}
+        <style>{`
+          a, button, .btn-primary, .btn-secondary, .glossy-card, .glass, .oceanic-glass {
+            transition: 
+              box-shadow 0.18s cubic-bezier(.4,0,.2,1),
+              background 0.18s cubic-bezier(.4,0,.2,1),
+              color 0.18s cubic-bezier(.4,0,.2,1),
+              transform 0.13s cubic-bezier(.4,0,.2,1);
+            cursor: pointer;
+          }
+          a:hover, button:hover, .btn-primary:hover, .btn-secondary:hover, .glossy-card:hover, .glass:hover, .oceanic-glass:hover {
+            box-shadow: 0 4px 24px 0 #5edfff44, 0 12px 40px 0 #00e5b022, 0 2px 12px 0 #bfeff333;
+            filter: brightness(1.03) saturate(1.08);
+            transform: translateY(-2px) scale(1.025);
+          }
+          a:active, button:active, .btn-primary:active, .btn-secondary:active, .glossy-card:active, .glass:active, .oceanic-glass:active {
+            filter: brightness(0.98) saturate(0.96);
+            transform: scale(0.98);
+          }
+          .glossy-card:focus-within, .glass:focus-within, .oceanic-glass:focus-within {
+            outline: 2px solid #5edfff;
+            outline-offset: 2px;
+          }
+        `}</style>
+        {/* Client-side script for interactive background glow */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function(){
+  if (typeof window === "undefined") return;
+  let bgDiv = null, glowDiv = null;
+  function updateDivs() {
+    bgDiv = document.querySelector(".layout-bg-interactive");
+    glowDiv = document.querySelector(".layout-bg-glow");
+  }
+  window.addEventListener("DOMContentLoaded", updateDivs);
+  window.addEventListener("load", updateDivs);
+
+  window.addEventListener("mousemove", function(e) {
+    if (!glowDiv) updateDivs();
+    if (glowDiv) {
+      glowDiv.style.background = 
+        "radial-gradient(50px at " + e.clientX + "px " + e.clientY + "px, #5edfff77 0%, #00e5b044 60%, transparent 100%)";
+    }
+  });
+  window.addEventListener("mouseleave", function() {
+    if (!glowDiv) updateDivs();
+    if (glowDiv) {
+      glowDiv.style.background =
+        "radial-gradient(50px at 50vw 50vh, #5edfff00 0%, #00e5b000 60%, transparent 100%)";
+    }
+  });
+})();
+            `
+          }}
+        />
       </body>
     </html>
   );

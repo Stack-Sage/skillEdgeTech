@@ -12,7 +12,7 @@ export default function ReviewsSection() {
           {siteContent.reviews.map((r, idx) => (
             <blockquote
               key={idx}
-              className="relative glossy-card card-content flex items-center gap-4 transition-transform duration-150 hover:scale-105"
+              className="relative glossy-card card-content flex flex-col items-center text-center gap-4 transition-transform duration-150 hover:scale-105"
             >
               <div>
                 <p className="text-base sm:text-lg md:text-xl font-medium leading-relaxed text-primary">
