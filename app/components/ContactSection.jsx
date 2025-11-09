@@ -1,33 +1,45 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { siteContent } from "../content";
+import emailjs from "emailjs-com";
+
+const serviceId = "service_kv038bt";
+const templateId = "template_mnsq05k";
+const userId = "ylfphfzXIJRLFZohj";
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [fields, setFields] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
+  const formRef = useRef();
 
   function handleChange(e) {
     setFields({ ...fields, [e.target.name]: e.target.value });
     setError("");
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Require exactly one of email or phone
-    const emailFilled = !!fields.email.trim();
-    const phoneFilled = !!fields.phone.trim();
-    if (!(emailFilled ^ phoneFilled)) {
-      setError("Please provide either an email or a phone number (not both).");
+    if (!fields.email.trim() && !fields.phone.trim()) {
+      setError("Please provide at least an email or a phone number.");
       return;
     }
-    setSubmitted(true);
-    // Optionally: send form data to backend here
+    setLoading(true);
+    setError("");
+    try {
+      await emailjs.sendForm(serviceId, templateId, formRef.current, userId);
+      setSubmitted(true);
+    } catch (err) {
+      setError("Failed to send message. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -62,19 +74,21 @@ export default function ContactSection() {
               </span>
             </span>
             <span className="block text-sm text-blue-700">
-              Please provide <span className="font-semibold">either</span> your email{" "}
+              Please provide <span className="font-semibold">at least</span> your email{" "}
               <span className="font-semibold">or</span> phone number.
             </span>
           </div>
           {!submitted ? (
             <form
+              ref={formRef}
               onSubmit={handleSubmit}
-              className="relative grid gap-8 grid-cols-1 sm:grid-cols-2 p-6 sm:p-10 rounded-2xl border border-white/20 shadow-xl glossy-card bg-white/80 backdrop-blur-md"
+              className="relative grid gap-8 grid-cols-1 sm:grid-cols-2 p-6 sm:p-10 rounded-2xl border border-white/20 shadow-xl glossy-card bg-white/80 backdrop-blur-md no-scale-effect"
               style={{
                 color: "#0f172a",
                 maxWidth: 540,
                 margin: "0 auto",
                 boxShadow: "0 8px 40px 0 #2563eb22, 0 2px 8px 0 #38bdf822",
+                transition: "box-shadow 0.18s, background 0.18s"
               }}
             >
               <div className="flex flex-col gap-2 sm:col-span-2">
@@ -115,12 +129,9 @@ export default function ContactSection() {
                   value={fields.email}
                   onChange={handleChange}
                   autoComplete="email"
-                  disabled={!!fields.phone.trim()}
                 />
                 <span className="text-xs text-blue-500 mt-1">
-                  {fields.phone.trim()
-                    ? "Email disabled when phone is filled."
-                    : "Enter your email or fill phone below."}
+                  Optional if phone is filled.
                 </span>
               </div>
               <div className="flex flex-col gap-2">
@@ -141,12 +152,9 @@ export default function ContactSection() {
                   value={fields.phone}
                   onChange={handleChange}
                   autoComplete="tel"
-                  disabled={!!fields.email.trim()}
                 />
                 <span className="text-xs text-blue-500 mt-1">
-                  {fields.email.trim()
-                    ? "Phone disabled when email is filled."
-                    : "Enter your phone or fill email above."}
+                  Optional if email is filled.
                 </span>
               </div>
               <div className="flex flex-col gap-2 sm:col-span-2">
@@ -176,15 +184,29 @@ export default function ContactSection() {
               )}
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold shadow sm:col-span-2 text-base sm:text-lg transition-transform duration-150 hover:scale-105 mt-2"
+                className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold shadow sm:col-span-2 text-base sm:text-lg mt-2 no-scale-effect"
                 style={{
                   background: "linear-gradient(90deg, #0ea5e9 0%, #2563eb 100%)",
                   color: "#fff",
                   letterSpacing: ".02em",
                   boxShadow: "0 2px 8px 0 #38bdf822",
+                  transform: "none",
+                  transition: "background 0.18s, color 0.18s"
                 }}
+                disabled={loading}
+                tabIndex={0}
               >
-                Send message
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                    </svg>
+                    Sending...
+                  </span>
+                ) : (
+                  "Send message"
+                )}
               </button>
             </form>
           ) : (
@@ -200,12 +222,32 @@ export default function ContactSection() {
               <span className="block text-2xl mb-2 text-blue-700">Thank you!</span>
               <span className="block mb-2">Your message has been received.</span>
               <span className="block text-sm text-blue-500">
-                (Integrate EmailJS/Nodemailer to wire real submissions.)
+                (Powered by EmailJS)
               </span>
             </div>
           )}
         </div>
       </div>
+      <style jsx global>{`
+        .no-scale-effect,
+        .no-scale-effect:hover,
+        .no-scale-effect:active,
+        .no-scale-effect:focus,
+        .no-scale-effect:visited {
+          transform: none !important;
+          transition-property: background, color, box-shadow !important;
+        }
+        .no-scale-effect:hover,
+        .no-scale-effect:active {
+          box-shadow: 0 2px 8px 0 #38bdf822;
+          filter: none !important;
+        }
+        .glossy-card.no-scale-effect:hover,
+        .glossy-card.no-scale-effect:active {
+          box-shadow: 0 8px 40px 0 #2563eb22, 0 2px 8px 0 #38bdf822;
+          background: linear-gradient(145deg, #fff 70%, #f4fafb 100%);
+        }
+      `}</style>
     </section>
   );
 }
