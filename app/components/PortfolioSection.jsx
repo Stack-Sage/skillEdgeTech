@@ -36,7 +36,7 @@ export default function PortfolioSection() {
                   width={400}
                   height={180}
                   className="w-full h-32 sm:h-40 md:h-48 object-cover rounded-xl"
-                  loading={idx === 0 ? "eager" : "lazy"}
+                  loading="lazy"
                   decoding="async"
                   sizes="(max-width: 768px) 100vw, 400px"
                 />

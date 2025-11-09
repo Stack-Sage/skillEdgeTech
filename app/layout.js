@@ -35,9 +35,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  // Remove all DOM event code from the component body.
-  // Instead, inject a script that handles mousemove for the background glow.
-
   return (
     <html lang="en">
       <head>
@@ -97,6 +94,21 @@ export default function RootLayout({ children }) {
             "linear-gradient(120deg, #fafdff 0%, #e6f6fa 20%, #c7eaf6 50%, #aee7f7 80%, #5edfff 100%)",
         }}
       >
+        {/* Advanced animated canvas background */}
+        <canvas
+          id="bluvia-bg-canvas"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            zIndex: 0,
+            pointerEvents: "none",
+            background: "transparent"
+          }}
+          aria-hidden="true"
+        />
         {/* SVG background effect with interactive overlay */}
         <div
           className="layout-bg-interactive"
@@ -107,7 +119,7 @@ export default function RootLayout({ children }) {
             left: 0,
             width: "100vw",
             height: "100vh",
-            zIndex: 0,
+            zIndex: 1,
             pointerEvents: "none",
             overflow: "hidden",
             background:
@@ -189,6 +201,69 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
+        {/* Advanced animated background script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function(){
+  // Advanced animated particles background
+  var canvas = document.getElementById('bluvia-bg-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var particles = [];
+  var colors = ["#5edfff", "#00e5b0", "#0099cc", "#aee7f7"];
+  for (var i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2.5 + 1.5,
+      dx: (Math.random() - 0.5) * 0.7,
+      dy: (Math.random() - 0.5) * 0.7,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: Math.random() * 0.5 + 0.3
+    });
+  }
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var p of particles) {
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.restore();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+            `
+          }}
+        />
+        {/* Global style for lazy loading images */}
+        <style>{`
+          img:not([loading]), img[loading="lazy"] {
+            filter: blur(0.03rem);
+            transition: filter 0.3s;
+          }
+          img[loading="lazy"]:not([src=""]) {
+            filter: none;
+          }
+        `}</style>
         {/* Interactive background CSS */}
         <style>{`
           a, button, .btn-primary, .btn-secondary, .glossy-card, .glass, .oceanic-glass {
@@ -213,7 +288,6 @@ export default function RootLayout({ children }) {
             outline-offset: 2px;
           }
         `}</style>
-        {/* Client-side script for interactive background glow */}
         <script
           dangerouslySetInnerHTML={{
             __html: `

@@ -18,7 +18,15 @@ export default function TestimonialsCarousel() {
           className="max-w-xl mx-auto bg-white/80 rounded-xl shadow p-8 flex flex-col items-center transition-all duration-300"
         >
           {reviews[idx]?.avatar && (
-            <img src={reviews[idx].avatar} alt={reviews[idx].name} className="w-16 h-16 rounded-full mb-4" />
+            <img
+              src={reviews[idx].avatar}
+              alt={reviews[idx].name}
+              className="w-16 h-16 rounded-full mb-4"
+              loading="lazy"
+              decoding="async"
+              width={64}
+              height={64}
+            />
           )}
           <p className="text-lg text-blue-700 mb-4">“{reviews[idx]?.text}”</p>
           <span className="font-semibold text-blue-900">{reviews[idx]?.name}</span>
