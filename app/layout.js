@@ -22,16 +22,27 @@ export const metadata = {
         alt: "Bluvia Logo",
       },
     ],
+    site_name: "Bluvia",
+    locale: "en_IN"
   },
   twitter: {
-    card: seo.twitter.cardType,
+    card: "summary_large_image",
+    site: "@bluvia_tech",
+    creator: "@bluvia_tech",
+    title: "Bluvia – Modern Web Design & Development",
+    description: "Bluvia builds stunning, high-performance websites and digital experiences for businesses, startups, and creators. Get a modern, SEO-optimized website that stands out.",
+    image: ogImage,
+    image_alt: "Bluvia Logo"
   },
   icons: {
-    icon: "/assets/logo_square.png", // Use logo_square.png as favicon
+    icon: "/assets/logo_square.png",
   },
   metadataBase: new URL(
     (siteContent.seo?.url || siteContent.url || "http://localhost:3000").replace(/skilledge\.tech/gi, "bluvia.tech")
   ),
+  alternates: {
+    canonical: "https://bluvia.tech/",
+  }
 };
 
 export default function RootLayout({ children }) {
@@ -55,9 +66,23 @@ export default function RootLayout({ children }) {
         <meta name="twitter:description" content={metadata.description} />
         <meta name="twitter:image" content={metadata.openGraph.images[0].url} />
         <meta name="twitter:image:alt" content={metadata.openGraph.images[0].alt} />
-        <link rel="canonical" href={metadata.openGraph.url} />
+        <meta name="keywords" content="Bluvia, web design, web development, oceanic design, glassmorphism, SEO, responsive websites, modern websites, business websites, SaaS, e-commerce, portfolio, branding, India" />
+        <meta name="author" content="Bluvia Team" />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="Bluvia" />
+        <meta property="og:url" content="https://bluvia.tech/" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <meta name="twitter:site" content="@bluvia_tech" />
+        <meta name="twitter:creator" content="@bluvia_tech" />
+        <meta name="twitter:image:alt" content="Bluvia Logo" />
+        <link rel="canonical" href="https://bluvia.tech/" />
+        <link rel="alternate" href="https://bluvia.tech/" hrefLang="en-in" />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <title>{metadata.title}</title>
         <link rel="icon" href="/assets/logo_square.png" type="image/png" />
+        {/* JSON-LD for Organization and Website */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -65,11 +90,33 @@ export default function RootLayout({ children }) {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": siteContent.companyName.replace(/SkillEdge/gi, "Bluvia"),
-              "url": metadata.openGraph.url,
-              "logo": "/assets/logo_square.png", // Use logo_square.png for structured data
+              "url": "https://bluvia.tech/",
+              "logo": "/assets/logo_square.png",
               "sameAs": [
                 siteContent.contact.instagram
-              ]
+              ],
+              "contactPoint": [{
+                "@type": "ContactPoint",
+                "email": siteContent.contact.email,
+                "telephone": siteContent.contact.phone,
+                "contactType": "customer support"
+              }]
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "url": "https://bluvia.tech/",
+              "name": "Bluvia – Modern Web Design & Development",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://bluvia.tech/?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
             })
           }}
         />
@@ -84,6 +131,8 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#5edfff" />
       </head>
       <body
         className="font-sans min-h-screen scrollbar-thin scrollbar-thumb-[#bfeff3] scrollbar-track-[#eaf7f9] selection:bg-primary-light/40 selection:text-primary-dark transition-colors"
@@ -319,6 +368,15 @@ export default function RootLayout({ children }) {
             `
           }}
         />
+        <script>
+          {`
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js');
+              });
+            }
+          `}
+        </script>
       </body>
     </html>
   );

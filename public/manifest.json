@@ -1,0 +1,21 @@
+{
+  "name": "Bluvia – Modern Web Design & Development",
+  "short_name": "Bluvia",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafdff",
+  "theme_color": "#5edfff",
+  "description": "Bluvia builds stunning, high-performance websites and digital experiences for businesses, startups, and creators.",
+  "icons": [
+    {
+      "src": "/assets/logo_square.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logo_square.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
