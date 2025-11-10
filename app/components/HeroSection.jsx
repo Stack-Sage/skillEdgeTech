@@ -124,21 +124,33 @@ export default function HeroSection() {
             style={{ background: "transparent" }}
             aria-live="polite"
           >
-            <div className="relative w-full h-[250px]">
+            <div className="relative w-full h-[320px] sm:h-[360px] md:h-[400px] transition-all duration-500">
               {heroImages.map((img, idx) => (
                 <div
                   key={idx}
-                  className={`absolute top-0 left-0 w-full h-full transition-all duration-500 ${idx === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+                  className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ease-[cubic-bezier(.7,0,.3,1)] ${
+                    idx === current
+                      ? "opacity-100 z-10 scale-100"
+                      : "opacity-0 z-0 scale-105"
+                  }`}
                   style={{
                     pointerEvents: idx === current ? "auto" : "none",
+                    transitionProperty: "opacity, transform",
                   }}
                 >
                   <Image
                     src={img.src}
                     alt={img.alt}
                     fill
-                    style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                    sizes="(max-width: 768px) 100vw, 400px"
+                    style={{
+                      objectFit: "cover",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "1rem",
+                      boxShadow: idx === current ? "0 8px 32px #38bdf855" : "none",
+                      transition: "box-shadow 0.5s cubic-bezier(.7,0,.3,1)"
+                    }}
+                    sizes="(max-width: 768px) 100vw, 500px"
                     priority={idx === 0}
                     loading={idx === 0 ? "eager" : "lazy"}
                     decoding="async"
@@ -146,11 +158,11 @@ export default function HeroSection() {
                 </div>
               ))}
             </div>
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10" role="tablist" aria-label="Hero image carousel">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10" role="tablist" aria-label="Hero image carousel">
               {heroImages.map((_, idx) => (
                 <button
                   key={idx}
-                  className={`w-2.5 h-2.5 rounded-full ${current === idx ? "bg-blue-600" : "bg-blue-200"} transition`}
+                  className={`w-3 h-3 rounded-full ${current === idx ? "bg-blue-600" : "bg-blue-200"} transition`}
                   style={{
                     outline: "none",
                     border: "none",
