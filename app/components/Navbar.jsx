@@ -4,10 +4,31 @@ import Link from "next/link";
 import Image from "next/image";
 import { siteContent } from "../content";
 import { useSoundEffect } from "../hooks/useSoundEffect";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { playClick } = useSoundEffect();
+  const pathname = usePathname();
+
+  // Helper to handle anchor navigation from /booking or other pages
+  function handleSectionNav(e, id) {
+    playClick();
+    if (pathname === "/") {
+      // On home, scroll to section
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth" });
+        setOpen(false);
+      }
+    } else {
+      // On other pages, go to home with hash
+      // Use window.location to force full navigation
+      e.preventDefault();
+      window.location.href = `/#${id}`;
+    }
+  }
 
   return (
     <header
@@ -63,13 +84,13 @@ export default function Navbar() {
               key={id}
               href={`#${id}`}
               className="transition font-medium px-2 py-1 rounded hover:bg-primary-light/30 text-primary-dark"
-              onClick={playClick}
+              onClick={e => handleSectionNav(e, id)}
             >
               {id.charAt(0).toUpperCase() + id.slice(1)}
             </a>
           ))}
           <Link
-            href="/signup"
+            href="/booking"
             className="ml-6 inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold btn-primary hover-glow"
             onClick={playClick}
           >
@@ -104,16 +125,16 @@ export default function Navbar() {
                 key={id}
                 href={`#${id}`}
                 className="transition font-medium px-2 py-2 rounded hover:bg-primary-light/30 text-primary-dark"
-                onClick={() => {
+                onClick={e => {
+                  handleSectionNav(e, id);
                   setOpen(false);
-                  playClick();
                 }}
               >
                 {id.charAt(0).toUpperCase() + id.slice(1)}
               </a>
             ))}
             <Link
-              href="/signup"
+              href="/booking"
               className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold btn-primary hover-glow"
               onClick={() => {
                 setOpen(false);

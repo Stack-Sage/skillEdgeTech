@@ -105,7 +105,7 @@ export default function HeroSection() {
           </p>
           <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
             <a
-              href="/signup"
+              href="/booking"
               className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold oceanic-gradient text-white shadow scale-hover scale-press text-lg sm:text-xl transition-transform duration-150 hover:scale-105"
             >
               Get started

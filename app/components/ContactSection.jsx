@@ -20,20 +20,58 @@ export default function ContactSection() {
   const formRef = useRef();
 
   function handleChange(e) {
-    setFields({ ...fields, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    // Only allow digits for phone field
+    if (name === "phone") {
+      // Allow only numbers, max 10 digits
+      const digits = value.replace(/\D/g, "").slice(0, 10);
+      setFields({ ...fields, [name]: digits });
+    } else {
+      setFields({ ...fields, [name]: value });
+    }
     setError("");
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!fields.email.trim() && !fields.phone.trim()) {
+    // Validate name
+    if (!fields.name.trim() || fields.name.length < 2) {
+      setError("Please enter your name.");
+      return;
+    }
+    // Validate email or phone (at least one required)
+    const emailFilled = !!fields.email.trim();
+    const phoneFilled = !!fields.phone.trim();
+    if (!emailFilled && !phoneFilled) {
       setError("Please provide at least an email or a phone number.");
+      return;
+    }
+    // Email validation (if filled)
+    if (emailFilled && !/^[\w-.]+@[\w-]+\.[a-zA-Z]{2,}$/.test(fields.email.trim())) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    // Phone validation (if filled)
+    if (phoneFilled && !/^[6-9]\d{9}$/.test(fields.phone.trim())) {
+      setError("Please enter a valid 10-digit Indian mobile number.");
+      return;
+    }
+    // Validate message
+    if (!fields.message.trim() || fields.message.length < 5) {
+      setError("Please enter a message (at least 5 characters).");
       return;
     }
     setLoading(true);
     setError("");
     try {
-      await emailjs.sendForm(serviceId, templateId, formRef.current, userId);
+      // Add a time field for the template
+      const form = formRef.current;
+      const now = new Date();
+      const timeStr = now.toLocaleString();
+      // Create a FormData clone to append time
+      const formData = new FormData(form);
+      formData.set("time", timeStr);
+      await emailjs.sendForm(serviceId, templateId, form, userId);
       setSubmitted(true);
     } catch (err) {
       setError("Failed to send message. Please try again later.");
@@ -208,6 +246,7 @@ export default function ContactSection() {
                   "Send message"
                 )}
               </button>
+              <input type="hidden" name="time" value={new Date().toLocaleString()} />
             </form>
           ) : (
             <div
