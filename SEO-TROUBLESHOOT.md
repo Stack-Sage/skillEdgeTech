@@ -55,3 +55,32 @@
 ---
 
 **Tip:** Use Google Search Console for all indexing, crawling, and SEO issues.
+
+# Using Vercel `.vercel.app` Subdomain for Google Search Console
+
+You **can** use your Vercel `.vercel.app` URL (e.g. `https://bluvia.vercel.app/`) for Google Search Console, but:
+
+- You **cannot** use DNS verification (TXT record) because you do not control DNS for `vercel.app`.
+- You **must** use the **URL prefix property** in Google Search Console.
+
+## Steps:
+
+1. **Go to Google Search Console** and choose "URL prefix" property.
+2. Enter your full site URL: `https://bluvia.vercel.app/`
+3. Choose one of these verification methods:
+   - **HTML file:** (Recommended) Place the provided HTML file in your `/public` folder. You already did this.
+   - **Meta tag:** Add the provided `<meta name="google-site-verification" ...>` to your `<head>` in `layout.js`.
+   - **Google Analytics** or **Tag Manager**: Only if you use them.
+
+4. Click "Verify" in Search Console.
+
+## Notes:
+
+- You do **not** need to add a DNS TXT record for `.vercel.app` subdomains.
+- Your `robots.txt` and `sitemap.xml` should use the `.vercel.app` base URL.
+- You can use your site and get indexed by Google with the `.vercel.app` domain.
+
+---
+
+**Summary:**  
+You can use your Vercel subdomain for Google Search Console and SEO. Use the HTML file or meta tag verification, not DNS.
