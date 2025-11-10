@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import emailjs from "emailjs-com";
@@ -34,7 +34,7 @@ const showcaseImages = [
   "/assets/gym_website.png"
 ];
 
-export default function BookingPage() {
+function BookingForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [fields, setFields] = useState({
@@ -436,5 +436,14 @@ export default function BookingPage() {
         </div>
       </div>
     </section>
+  );
+}
+
+// Wrap BookingForm in Suspense for useSearchParams support
+export default function BookingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-blue-700 text-xl">Loading booking form...</div>}>
+      <BookingForm />
+    </Suspense>
   );
 }
