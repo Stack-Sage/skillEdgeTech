@@ -3,6 +3,7 @@ import { defaultSEO } from "./utils/seo";
 import { siteContent } from "./content";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 // Build metadata from content.js and defaultSEO util
 const seo = defaultSEO(siteContent);
