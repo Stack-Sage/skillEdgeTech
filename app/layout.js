@@ -256,6 +256,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
+        <SpeedInsights />
         {/* Advanced animated background script */}
         <script
           dangerouslySetInnerHTML={{
